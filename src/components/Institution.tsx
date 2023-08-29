@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
-import { request } from "../utils";
-import { CollectionType, DetailedInstitutionType } from "../Types";
+import {
+  CollectionType,
+  DetailedInstitutionType,
+  EntityType,
+  FetchParamsType,
+} from "../Types";
 import { useNavigate } from "react-router-dom";
+import { fetchEntity } from "../utils";
 
 const Institution = () => {
   const navigate = useNavigate();
@@ -11,11 +16,15 @@ const Institution = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const id = window.location.pathname.split("/")[2];
 
+  const params: FetchParamsType = {
+    city: "berlin",
+    type: EntityType.institution,
+    id: id,
+  };
+
   useEffect(() => {
     (async () => {
-      const res = await request<DetailedInstitutionType>(
-        `https://berlin.museum-digital.de/json/institution/${id}`
-      );
+      const res = await fetchEntity<DetailedInstitutionType>(params);
       setInstitution(res);
       setIsLoading(false);
     })();

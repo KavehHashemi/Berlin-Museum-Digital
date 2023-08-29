@@ -210,3 +210,19 @@ export type DetailedObjectType = {
     }
   ];
 };
+
+export type FetchParamsType = {
+  city: string;
+  type: EntityType;
+  id?: string;
+  queryParam?: string;
+};
+
+export enum EntityType {
+  institutions = "institutions",
+  institution = "institution",
+  collections = "collections",
+  collection = "collection",
+  objects = "objects",
+  object = "object",
+}
