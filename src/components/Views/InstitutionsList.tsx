@@ -1,5 +1,6 @@
 import { CompactInstitutionType } from "../../Types";
 import InstitutionCard from "./InstitutionCard";
+import { SimpleGrid } from "@mantine/core/";
 
 type props = {
   isLoading: boolean;
@@ -8,19 +9,22 @@ type props = {
 
 const InstitutionsList = ({ institutions, isLoading }: props) => {
   return (
-    <div style={{ display: "flex" }}>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        {isLoading ? (
-          <>loading institutions</>
-        ) : (
-          institutions.sort().map((inst, i) => {
-            return (
-              <InstitutionCard institution={inst} key={i}></InstitutionCard>
-            );
-          })
-        )}
-      </div>
-    </div>
+    <SimpleGrid
+      spacing="md"
+      breakpoints={[
+        { minWidth: "sm", cols: 2 },
+        { minWidth: "md", cols: 3 },
+        { minWidth: "lg", cols: 4 },
+      ]}
+    >
+      {isLoading ? (
+        <div>loading institutions</div>
+      ) : (
+        institutions.sort().map((inst, i) => {
+          return <InstitutionCard institution={inst} key={i}></InstitutionCard>;
+        })
+      )}
+    </SimpleGrid>
   );
 };
 

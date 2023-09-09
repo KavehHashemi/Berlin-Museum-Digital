@@ -1,4 +1,4 @@
-import React from "react";
+import { Card } from "@mantine/core";
 import { CompactInstitutionType } from "../../Types";
 import { useNavigate } from "react-router-dom";
 type props = {
@@ -10,8 +10,7 @@ const InstitutionCard = ({ institution }: props) => {
     navigate(`institutions/${id}/${name}`);
   };
   return (
-    <div
-      style={{ backgroundColor: "#000055" }}
+    <Card
       id={institution.institution_id.toString()}
       key={institution.institution_id}
       onClick={() => {
@@ -19,7 +18,7 @@ const InstitutionCard = ({ institution }: props) => {
       }}
     >
       {institution.institution_name} - {institution.institution_place}
-    </div>
+    </Card>
   );
 };
 

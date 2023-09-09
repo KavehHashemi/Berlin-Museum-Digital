@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { CompactObjectType, EntityType, FetchParamsType } from "../Types";
 import { fetchEntity } from "../utils";
+import { Card, SimpleGrid } from "@mantine/core";
 
 type PicType = { url: string; name: string };
 
@@ -49,39 +50,35 @@ const Object = () => {
   };
 
   return (
-    <div>
+    <SimpleGrid
+      spacing="md"
+      breakpoints={[
+        { minWidth: "sm", cols: 2 },
+        { minWidth: "md", cols: 3 },
+        { minWidth: "lg", cols: 4 },
+      ]}
+      p={"0.5rem"}
+    >
       {isLoading ? (
         <div>loading object</div>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "1rem",
-          }}
-        >
+        <>
           {pics.map((p, i) => {
             return (
-              <div
-                key={i}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ width: "200px" }}>{p.name}</div>
+              <Card key={i}>
+                <div>{p.name}</div>
                 <img
                   src={`https://berlin.museum-digital.de/${p.url}`}
                   alt={p.name}
                   width={200}
                   onClick={() => handleClick(p.url)}
                 ></img>
-              </div>
+              </Card>
             );
           })}
-        </div>
+        </>
       )}
-    </div>
+    </SimpleGrid>
   );
 };
 

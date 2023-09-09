@@ -7,6 +7,7 @@ import {
 } from "../Types";
 import { useNavigate } from "react-router-dom";
 import { fetchEntity } from "../utils";
+import { Card, Flex, SimpleGrid } from "@mantine/core";
 
 const Institution = () => {
   const navigate = useNavigate();
@@ -50,26 +51,36 @@ const Institution = () => {
   };
 
   return (
-    <div>
+    <Flex p={"0.5rem"}>
       {isLoading ? (
         <>loading institution</>
       ) : (
-        <div>
-          {institution?.institution_name}
-          {collections?.sort().map((c) => (
-            <div
-              onClick={() => handleClick(c.collection_id, c.collection_name)}
-              key={c.collection_id}
-              style={{ backgroundColor: "#333388", padding: "0.5rem" }}
-            >
-              <div>
-                {c.collection_name} - {c.collection_id}
-              </div>
-            </div>
-          ))}
-        </div>
+        <Flex direction={"column"}>
+          <Flex justify={"center"} py={"1rem"}>
+            {institution?.institution_name}
+          </Flex>
+          <SimpleGrid
+            spacing="md"
+            breakpoints={[
+              { minWidth: "sm", cols: 2 },
+              { minWidth: "md", cols: 3 },
+              { minWidth: "lg", cols: 4 },
+            ]}
+          >
+            {collections?.sort().map((c) => (
+              <Card
+                onClick={() => handleClick(c.collection_id, c.collection_name)}
+                key={c.collection_id}
+              >
+                <div>
+                  {c.collection_name} - {c.collection_id}
+                </div>
+              </Card>
+            ))}
+          </SimpleGrid>
+        </Flex>
       )}
-    </div>
+    </Flex>
   );
 };
 
