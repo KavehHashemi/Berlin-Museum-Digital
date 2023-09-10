@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useEffect, useContext, useState } from "react";
 import { DetailedCollectionType, EntityType, FetchParamsType } from "../Types";
 import { useNavigate } from "react-router-dom";
 import { fetchEntity } from "../utils";
+import { PathDispatchContext } from "../context";
 
 const Collection = () => {
   const navigate = useNavigate();
+  const dispatch = useContext(PathDispatchContext);
   const [collection, setCollection] = useState<DetailedCollectionType | null>(
     null
   );
@@ -30,7 +33,10 @@ const Collection = () => {
   }, []);
 
   useEffect(() => {
-    if (collection) console.log(collection);
+    if (collection) {
+      if (dispatch)
+        dispatch({ type: "setColl", coll: collection.collection_name });
+    }
   }, [collection]);
 
   const handleClick = () => {

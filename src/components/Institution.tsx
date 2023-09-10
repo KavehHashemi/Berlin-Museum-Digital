@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useEffect, useContext, useState } from "react";
 import {
   CollectionType,
   DetailedInstitutionType,
@@ -8,9 +9,13 @@ import {
 import { useNavigate } from "react-router-dom";
 import { fetchEntity } from "../utils";
 import { Card, Flex, SimpleGrid } from "@mantine/core";
+import { PathDispatchContext } from "../context";
+// import { initialPath, reducer } from "../reducer";
 
 const Institution = () => {
   const navigate = useNavigate();
+  // const [path, dispatch] = useReducer(reducer, initialPath);
+  const dispatch = useContext(PathDispatchContext);
   const [institution, setInstitution] =
     useState<DetailedInstitutionType | null>(null);
   const [collections, setCollections] = useState<CollectionType[] | null>(null);
@@ -37,7 +42,8 @@ const Institution = () => {
 
   useEffect(() => {
     if (institution) {
-      // console.log(institution.collections);
+      if (dispatch)
+        dispatch({ type: "setInst", inst: institution.institution_name });
       const temp: CollectionType[] = [];
       for (const c in institution.collections) {
         temp.push(institution.collections[c]);
@@ -64,7 +70,7 @@ const Institution = () => {
             breakpoints={[
               { minWidth: "sm", cols: 2 },
               { minWidth: "md", cols: 3 },
-              { minWidth: "lg", cols: 4 },
+              { minWidth: "lg", cols: 5 },
             ]}
           >
             {collections?.sort().map((c) => (

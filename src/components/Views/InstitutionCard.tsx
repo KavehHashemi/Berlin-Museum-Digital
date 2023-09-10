@@ -1,12 +1,13 @@
 import { Card } from "@mantine/core";
 import { CompactInstitutionType } from "../../Types";
 import { useNavigate } from "react-router-dom";
+
 type props = {
   institution: CompactInstitutionType;
 };
 const InstitutionCard = ({ institution }: props) => {
   const navigate = useNavigate();
-  const handleClick = async (id: number, name: string) => {
+  const handleClick = (id: number, name: string) => {
     navigate(`institutions/${id}/${name}`);
   };
   return (
