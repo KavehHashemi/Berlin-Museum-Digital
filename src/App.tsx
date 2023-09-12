@@ -6,23 +6,24 @@ import Collection from "./components/Collection";
 import Object from "./components/Object";
 import { MantineProvider } from "@mantine/core";
 import Navbar from "./components/Navbar";
-import { DarkTheme, LightTheme } from "./styles/theme";
+import { themeGenerator } from "./styles/theme";
 import { useContext, useEffect, useReducer, useState } from "react";
 import { initialPath, reducer } from "./reducer";
 import { PathContext, PathProvider } from "./context";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 const Layout = () => {
-  const [lightMode, setLightMode] = useState<boolean>(false);
-  // const path = useContext(PathContext);
+  const [isLightMode, setLightMode] = useState<boolean>(
+    localStorage.getItem("isLightMode") === "light" ? true : false
+  );
   return (
     <MantineProvider
-      theme={lightMode ? LightTheme : DarkTheme}
+      theme={themeGenerator(isLightMode)}
       withGlobalStyles
       withNormalizeCSS
     >
       <PathProvider>
-        <Navbar lightMode={lightMode} setMode={setLightMode}></Navbar>
+        <Navbar lightMode={isLightMode} setMode={setLightMode}></Navbar>
         <Outlet></Outlet>
       </PathProvider>
     </MantineProvider>

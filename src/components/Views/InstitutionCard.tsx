@@ -12,10 +12,11 @@ const InstitutionCard = ({ institution }: props) => {
     // const url = pathGenerator({
     //   inst: { id: id, name: name },
     // });
-    navigate(`institutions/${id}`);
+    navigate(`institutions/${id}/${name}`);
   };
   return (
     <Card
+      variant="institution"
       id={institution.institution_id.toString()}
       key={institution.institution_id}
       onClick={() => {

@@ -1,13 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Header, Text, Popover, Flex } from "@mantine/core";
-import {
-  IconCircleLetterB,
-  IconSun,
-  IconPointFilled,
-} from "@tabler/icons-react";
+import { Header, Text, Popover, Flex, Button, Center } from "@mantine/core";
+import { IconCircleLetterB, IconSun, IconMoon } from "@tabler/icons-react";
 
 import "../styles/navbar.css";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { PathContext } from "../context";
 import BreadCrumbs from "./BreadCrumbs";
 
@@ -17,7 +13,10 @@ type NavBarProps = {
 };
 
 const Navbar = ({ setMode, lightMode }: NavBarProps) => {
-  // const path = useContext(PathContext);
+  useEffect(() => {
+    localStorage.setItem("isLightMode", lightMode ? "light" : "dark");
+  }, [lightMode]);
+
   return (
     <>
       <Header height={60}>
@@ -30,7 +29,9 @@ const Navbar = ({ setMode, lightMode }: NavBarProps) => {
         <Text size={"lg"} weight={"bolder"}>
           Museum Digital
         </Text>
-        <IconSun onClick={() => setMode(!lightMode)}></IconSun>
+        <Center onClick={() => setMode(!lightMode)}>
+          {lightMode ? <IconMoon></IconMoon> : <IconSun></IconSun>}
+        </Center>
       </Header>
       {/* <Flex
         gap={"1rem"}
