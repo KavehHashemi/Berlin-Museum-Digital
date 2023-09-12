@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchEntity } from "../utils";
 import { Card, Flex, SimpleGrid } from "@mantine/core";
 import { PathDispatchContext } from "../context";
+// import { pathGenerator } from "../Paths";
 // import { initialPath, reducer } from "../reducer";
 
 const Institution = () => {
@@ -43,7 +44,13 @@ const Institution = () => {
   useEffect(() => {
     if (institution) {
       if (dispatch)
-        dispatch({ type: "setInst", inst: institution.institution_name });
+        dispatch({
+          type: "setInst",
+          inst: {
+            id: institution.institution_id,
+            name: institution.institution_name,
+          },
+        });
       const temp: CollectionType[] = [];
       for (const c in institution.collections) {
         temp.push(institution.collections[c]);
@@ -53,6 +60,13 @@ const Institution = () => {
   }, [institution]);
 
   const handleClick = (id: number, name: string) => {
+    // const url = pathGenerator({
+    //   inst: {
+    //     id: institution?.institution_id || -1,
+    //     name: institution?.institution_name || "",
+    //   },
+    //   coll: { id: id, name: name },
+    // });
     navigate(`/collections/${id}/${name}`);
   };
 
@@ -81,6 +95,7 @@ const Institution = () => {
                 <div>
                   {c.collection_name} - {c.collection_id}
                 </div>
+                <div>{c.collection_description}</div>
               </Card>
             ))}
           </SimpleGrid>

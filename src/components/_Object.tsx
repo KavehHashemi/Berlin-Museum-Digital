@@ -1,22 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CompactObjectType, EntityType, FetchParamsType } from "../Types";
 import { fetchEntity } from "../utils";
 import { Card, SimpleGrid } from "@mantine/core";
-import { PathDispatchContext } from "../context";
-import { useNavigate } from "react-router-dom";
 
-type PicType = { id: number; name: string; url: string };
+type PicType = { url: string; name: string };
 
 const Object = () => {
-  const dispatch = useContext(PathDispatchContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [collection, setCollection] = useState<CompactObjectType[] | null>(
-    null
-  );
+  const [object, setObject] = useState<CompactObjectType[] | null>(null);
   const [pics, setPics] = useState<PicType[]>([]);
-  const navigate = useNavigate();
-  const id = window.location.pathname.split("/")[2];
-  const name = window.location.pathname.split("/")[3];
+  const id = window.location.pathname.split("/")[3];
 
   const params: FetchParamsType = {
     city: "berlin",
@@ -28,7 +21,7 @@ const Object = () => {
     (async () => {
       try {
         const res = await fetchEntity<CompactObjectType[]>(params);
-        setCollection(res);
+        setObject(res);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -41,38 +34,19 @@ const Object = () => {
   }, []);
 
   useEffect(() => {
-    if (collection) {
-      if (dispatch) {
-        dispatch({
-          type: "setColl",
-          coll: {
-            id: +id,
-            name: decodeURI(name),
-          },
-        });
-      }
+    if (object) {
       const temp: PicType[] = [];
-      for (const obj in collection) {
-        temp.push({
-          id: collection[obj].objekt_id,
-          name: collection[obj].objekt_name,
-          url: collection[obj].image,
-        });
+      for (const obj in object) {
+        temp.push({ url: object[obj].image, name: object[obj].objekt_name });
       }
       setPics(temp);
     }
-  }, [collection]);
+  }, [object]);
 
-  // const handleClick = (url: string) => {
-  //   const a = url.split("200w_");
-  //   const b = a[0] + a[1];
-  //   console.log(b);
-
-  //   window.open(`https://berlin.museum-digital.de/${b}`, "_blank")?.focus();
-  // };
-
-  const handleClick = (id: number, name: string) => {
-    navigate(`/objects/${id}/${name}`);
+  const handleClick = (url: string) => {
+    const a = url.split("200w_");
+    const b = a[0] + a[1];
+    window.open(`https://berlin.museum-digital.de/${b}`, "_blank")?.focus();
   };
 
   return (
@@ -97,8 +71,7 @@ const Object = () => {
                   src={`https://berlin.museum-digital.de/${p.url}`}
                   alt={p.name}
                   width={200}
-                  onClick={() => handleClick(p.id, p.name)}
-                  // onClick={() => handleClick(p.url)}
+                  onClick={() => handleClick(p.url)}
                 ></img>
               </Card>
             );

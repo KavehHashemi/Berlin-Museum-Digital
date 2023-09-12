@@ -9,6 +9,7 @@ import {
 import "../styles/navbar.css";
 import { useContext } from "react";
 import { PathContext } from "../context";
+import BreadCrumbs from "./BreadCrumbs";
 
 type NavBarProps = {
   lightMode: boolean;
@@ -16,8 +17,7 @@ type NavBarProps = {
 };
 
 const Navbar = ({ setMode, lightMode }: NavBarProps) => {
-  const path = useContext(PathContext);
-
+  // const path = useContext(PathContext);
   return (
     <>
       <Header height={60}>
@@ -32,16 +32,16 @@ const Navbar = ({ setMode, lightMode }: NavBarProps) => {
         </Text>
         <IconSun onClick={() => setMode(!lightMode)}></IconSun>
       </Header>
-      <Flex
+      {/* <Flex
         gap={"1rem"}
         style={{ backgroundColor: "#000033", paddingBlock: "0.2rem" }}
-      >
-        <IconPointFilled
-        // onClick={() => dispatch({ type: "clearAll" })}
-        ></IconPointFilled>
-        <div>{path.institution}</div>
-        <div>{path.collection && "-   " + path.collection}</div>
-      </Flex>
+      > */}
+      <BreadCrumbs
+      // inst={path.inst}
+      // coll={path.coll}
+      // obj={path.obj}
+      ></BreadCrumbs>
+      {/* </Flex> */}
     </>
   );
 };

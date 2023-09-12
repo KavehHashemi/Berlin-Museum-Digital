@@ -1,33 +1,30 @@
-import { useEffect, useState } from "react";
-import { CompactObjectType, EntityType, FetchParamsType } from "../Types";
+import { useContext, useEffect, useState } from "react";
+import { DetailedObjectType, EntityType, FetchParamsType } from "../Types";
 import { fetchEntity } from "../utils";
-import { Card, SimpleGrid } from "@mantine/core";
-
-type PicType = { url: string; name: string };
+import { PathDispatchContext } from "../context";
+import { Card } from "@mantine/core";
 
 const Object = () => {
+  const dispatch = useContext(PathDispatchContext);
+  const [object, setObject] = useState<DetailedObjectType | null>(null);
+  const [imgUrl, setImgUrl] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [object, setObject] = useState<CompactObjectType[] | null>(null);
-  const [pics, setPics] = useState<PicType[]>([]);
-  const id = window.location.pathname.split("/")[3];
+
+  const id = window.location.pathname.split("/")[2];
+  // const name = window.location.pathname.split("/")[3];
 
   const params: FetchParamsType = {
     city: "berlin",
-    type: EntityType.objects,
-    queryParam: `?s=collection:${id}&gbreitenat=50&navlang=de`,
+    type: EntityType.object,
+    id: id,
   };
 
   useEffect(() => {
     (async () => {
-      try {
-        const res = await fetchEntity<CompactObjectType[]>(params);
-        setObject(res);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
+      const res = await fetchEntity<DetailedObjectType>(params);
+      setObject(res);
+      setIsLoading(false);
     })();
-
     return () => {
       setIsLoading(true);
     };
@@ -35,50 +32,43 @@ const Object = () => {
 
   useEffect(() => {
     if (object) {
-      const temp: PicType[] = [];
-      for (const obj in object) {
-        temp.push({ url: object[obj].image, name: object[obj].objekt_name });
-      }
-      setPics(temp);
+      if (dispatch)
+        dispatch({
+          type: "setObj",
+          obj: { id: object.object_id, name: object.object_name },
+        });
+      setImgUrl(
+        "https://berlin.museum-digital.de/data/berlin/" +
+          object.object_images[0].folder +
+          "/" +
+          object?.object_images[0].preview
+      );
     }
   }, [object]);
 
-  const handleClick = (url: string) => {
-    const a = url.split("200w_");
-    const b = a[0] + a[1];
-    window.open(`https://berlin.museum-digital.de/${b}`, "_blank")?.focus();
+  const handleClick = () => {
+    if (object) {
+      const url =
+        "https://berlin.museum-digital.de/data/berlin/" +
+        object.object_images[0].folder +
+        "/" +
+        object?.object_images[0].filename_loc;
+      window.open(url, "_blank")?.focus();
+    }
   };
 
   return (
-    <SimpleGrid
-      spacing="md"
-      breakpoints={[
-        { minWidth: "sm", cols: 2 },
-        { minWidth: "md", cols: 3 },
-        { minWidth: "lg", cols: 4 },
-      ]}
-      p={"0.5rem"}
-    >
+    <div>
       {isLoading ? (
-        <div>loading object</div>
+        <div>loading</div>
       ) : (
-        <>
-          {pics.map((p, i) => {
-            return (
-              <Card key={i}>
-                <div>{p.name}</div>
-                <img
-                  src={`https://berlin.museum-digital.de/${p.url}`}
-                  alt={p.name}
-                  width={200}
-                  onClick={() => handleClick(p.url)}
-                ></img>
-              </Card>
-            );
-          })}
-        </>
+        <Card onClick={handleClick}>
+          <img src={imgUrl} alt={object?.object_name} width={200}></img>
+          <div>{object?.object_name}</div>
+          <div>{object?.object_description}</div>
+        </Card>
       )}
-    </SimpleGrid>
+    </div>
   );
 };
 

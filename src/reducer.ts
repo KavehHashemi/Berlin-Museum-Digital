@@ -1,32 +1,41 @@
-export type PathType = {
-  institution: string | null;
-  collection: string | null;
-};
+import { PathType } from "./Types";
 
 export const initialPath: PathType = {
-  institution: null,
-  collection: null,
+  inst: undefined,
+  coll: undefined,
+  obj: undefined,
 };
 
 export type ActionType =
-  | { type: "setInst"; inst: string }
-  | { type: "setColl"; coll: string }
+  | { type: "setInst"; inst: { id: number; name: string } }
+  | { type: "setColl"; coll: { id: number; name: string } }
+  | { type: "setObj"; obj: { id: number; name: string } }
   | { type: "clearInst" }
   | { type: "clearColl" }
+  | { type: "clearObj" }
   | { type: "clearAll" };
 
 export const reducer = (state: PathType, action: ActionType) => {
   switch (action.type) {
     case "setInst":
-      return { ...state, institution: action.inst };
+      return { ...state, inst: { id: action.inst.id, name: action.inst.name } };
     case "setColl":
-      return { ...state, collection: action.coll };
+      return { ...state, coll: { id: action.coll.id, name: action.coll.name } };
+    case "setObj":
+      return { ...state, obj: { id: action.obj.id, name: action.obj.name } };
     case "clearInst":
-      return { ...state, institution: null };
+      return { ...state, inst: undefined };
     case "clearColl":
-      return { ...state, collection: null };
+      return { ...state, coll: undefined };
+    case "clearObj":
+      return { ...state, obj: undefined };
     case "clearAll":
-      return { ...state, institution: null, collection: null };
+      return {
+        ...state,
+        inst: undefined,
+        coll: undefined,
+        obj: undefined,
+      };
     default:
       return state;
   }

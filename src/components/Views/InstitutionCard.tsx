@@ -5,10 +5,14 @@ import { useNavigate } from "react-router-dom";
 type props = {
   institution: CompactInstitutionType;
 };
+
 const InstitutionCard = ({ institution }: props) => {
   const navigate = useNavigate();
   const handleClick = (id: number, name: string) => {
-    navigate(`institutions/${id}/${name}`);
+    // const url = pathGenerator({
+    //   inst: { id: id, name: name },
+    // });
+    navigate(`institutions/${id}`);
   };
   return (
     <Card

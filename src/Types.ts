@@ -226,3 +226,9 @@ export enum EntityType {
   objects = "objects",
   object = "object",
 }
+
+export type PathType = {
+  inst?: { id: number; name: string };
+  coll?: { id: number; name: string };
+  obj?: { id: number; name: string };
+};

@@ -1,9 +1,11 @@
 import { ReactNode, createContext, useReducer } from "react";
-import { ActionType, PathType, initialPath, reducer } from "./reducer";
+import { ActionType, initialPath, reducer } from "./reducer";
+import { PathType } from "./Types";
 
 export const PathContext = createContext<PathType>({
-  institution: null,
-  collection: null,
+  inst: undefined,
+  coll: undefined,
+  obj: undefined,
 });
 
 export const PathDispatchContext =
@@ -12,6 +14,7 @@ export const PathDispatchContext =
 type props = {
   children: ReactNode;
 };
+
 export const PathProvider = ({ children }: props) => {
   const [path, dispatch] = useReducer(reducer, initialPath);
   return (
