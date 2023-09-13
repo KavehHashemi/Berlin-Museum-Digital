@@ -60,13 +60,6 @@ const Institution = () => {
   }, [institution]);
 
   const handleClick = (id: number, name: string) => {
-    // const url = pathGenerator({
-    //   inst: {
-    //     id: institution?.institution_id || -1,
-    //     name: institution?.institution_name || "",
-    //   },
-    //   coll: { id: id, name: name },
-    // });
     navigate(`/collections/${id}/${name}`);
   };
 
@@ -89,11 +82,24 @@ const Institution = () => {
           >
             {collections?.sort().map((c) => (
               <Card
+                variant="institution"
                 onClick={() => handleClick(c.collection_id, c.collection_name)}
                 key={c.collection_id}
               >
+                {c.collection_image ? (
+                  <img
+                    src={`https://berlin.museum-digital.de/data/berlin/${c.collection_image}`}
+                  ></img>
+                ) : (
+                  <img
+                    src={
+                      "https://berlin.museum-digital.de/db_images_gestaltung/mdlogo-128px.png"
+                    }
+                  ></img>
+                )}
+
                 <div>
-                  {c.collection_name} - {c.collection_id}
+                  {c.collection_name} - {c.collection_number_of_objects}
                 </div>
                 <div>{c.collection_description}</div>
               </Card>

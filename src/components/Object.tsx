@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { DetailedObjectType, EntityType, FetchParamsType } from "../Types";
 import { fetchEntity } from "../utils";
 import { PathDispatchContext } from "../context";
-import { Card } from "@mantine/core";
+import { Card, Flex } from "@mantine/core";
 
 const Object = () => {
   const dispatch = useContext(PathDispatchContext);
@@ -58,17 +58,17 @@ const Object = () => {
   };
 
   return (
-    <div>
+    <Flex>
       {isLoading ? (
         <div>loading</div>
       ) : (
-        <Card onClick={handleClick}>
+        <Card variant="institution" onClick={handleClick}>
           <img src={imgUrl} alt={object?.object_name} width={200}></img>
           <div>{object?.object_name}</div>
           <div>{object?.object_description}</div>
         </Card>
       )}
-    </div>
+    </Flex>
   );
 };
 

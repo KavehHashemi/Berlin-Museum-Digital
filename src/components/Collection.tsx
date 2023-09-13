@@ -94,7 +94,7 @@ const Object = () => {
         <>
           {pics.map((p, i) => {
             return (
-              <Card key={i}>
+              <Card variant="institution" key={i}>
                 <div>{p.name}</div>
                 <img
                   src={`https://berlin.museum-digital.de/${p.url}`}

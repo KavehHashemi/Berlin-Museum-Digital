@@ -9,6 +9,14 @@ export const themeGenerator = (isLightMode: boolean) => {
       },
     }),
     components: {
+      SimpleGrid: {
+        styles: {
+          root: {
+            padding: "1rem",
+            gap: "1.5rem",
+          },
+        },
+      },
       Header: {
         styles: {
           root: {
@@ -30,8 +38,9 @@ export const themeGenerator = (isLightMode: boolean) => {
         variants: {
           institution: (theme) => ({
             root: {
+              padding: "1.25rem",
               backgroundColor: isLightMode
-                ? theme.colors.gray[0]
+                ? theme.colors.gray[2]
                 : theme.colors.dark[8],
               ...theme.fn.hover({
                 backgroundColor: isLightMode
