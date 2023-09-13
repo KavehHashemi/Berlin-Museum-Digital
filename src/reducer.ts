@@ -6,7 +6,7 @@ export const initialPath: PathType = {
   obj: undefined,
 };
 
-export type ActionType =
+export type PathActionType =
   | { type: "setInst"; inst: { id: number; name: string } }
   | { type: "setColl"; coll: { id: number; name: string } }
   | { type: "setObj"; obj: { id: number; name: string } }
@@ -15,7 +15,7 @@ export type ActionType =
   | { type: "clearObj" }
   | { type: "clearAll" };
 
-export const reducer = (state: PathType, action: ActionType) => {
+export const pathReducer = (state: PathType, action: PathActionType) => {
   switch (action.type) {
     case "setInst":
       return { ...state, inst: { id: action.inst.id, name: action.inst.name } };
@@ -36,6 +36,35 @@ export const reducer = (state: PathType, action: ActionType) => {
         coll: undefined,
         obj: undefined,
       };
+    default:
+      return state;
+  }
+};
+
+////////////////
+
+export type SearchStateType = string | undefined;
+
+export const initialSearchParam: SearchStateType = undefined;
+
+export type SearchActionType =
+  | {
+      type: "setSearchParam";
+      payload: string;
+    }
+  | {
+      type: "clearSearchParam";
+    };
+
+export const searchReducer = (
+  state: SearchStateType,
+  action: SearchActionType
+) => {
+  switch (action.type) {
+    case "setSearchParam":
+      return action.payload;
+    case "clearSearchParam":
+      return undefined;
     default:
       return state;
   }

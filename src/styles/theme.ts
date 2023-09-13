@@ -19,7 +19,13 @@ export const themeGenerator = (isLightMode: boolean) => {
           },
         },
       },
-
+      TextInput: {
+        styles: {
+          root: {
+            width: "25vw",
+          },
+        },
+      },
       Card: {
         variants: {
           institution: (theme) => ({

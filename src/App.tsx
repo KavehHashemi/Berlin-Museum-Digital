@@ -8,9 +8,10 @@ import { MantineProvider } from "@mantine/core";
 import Navbar from "./components/Navbar";
 import { themeGenerator } from "./styles/theme";
 import { useContext, useEffect, useReducer, useState } from "react";
-import { initialPath, reducer } from "./reducer";
-import { PathContext, PathProvider } from "./context";
+import { initialPath, pathReducer } from "./reducer";
+import { PathContext, PathProvider, SearchProvider } from "./context";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import SearchResults from "./components/SearchResults";
 
 const Layout = () => {
   const [isLightMode, setLightMode] = useState<boolean>(
@@ -23,8 +24,10 @@ const Layout = () => {
       withNormalizeCSS
     >
       <PathProvider>
-        <Navbar lightMode={isLightMode} setMode={setLightMode}></Navbar>
-        <Outlet></Outlet>
+        <SearchProvider>
+          <Navbar lightMode={isLightMode} setMode={setLightMode}></Navbar>
+          <Outlet></Outlet>
+        </SearchProvider>
       </PathProvider>
     </MantineProvider>
   );
@@ -61,6 +64,7 @@ const router = createBrowserRouter([
       { path: `/institutions/*`, Component: Institution },
       { path: `/collections/*`, Component: Collection },
       { path: `/objects/*`, Component: Object },
+      { path: `/search/*`, Component: SearchResults },
       { path: "*", Component: Root },
     ],
   },

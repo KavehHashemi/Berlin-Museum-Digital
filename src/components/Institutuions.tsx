@@ -3,6 +3,8 @@ import { CompactInstitutionType, EntityType, FetchParamsType } from "../Types";
 import { fetchEntity } from "../utils";
 import InstitutionsList from "./Views/InstitutionsList";
 import { PathDispatchContext } from "../context";
+import { Flex } from "@mantine/core";
+import Search from "./Search";
 
 const Institutuions = () => {
   const [institutions, setInstitutions] = useState<CompactInstitutionType[]>(
@@ -10,6 +12,7 @@ const Institutuions = () => {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useContext(PathDispatchContext);
+
   const params: FetchParamsType = {
     city: "berlin",
     type: EntityType.institutions,
@@ -28,10 +31,13 @@ const Institutuions = () => {
   }, []);
 
   return (
-    <InstitutionsList
-      institutions={institutions}
-      isLoading={isLoading}
-    ></InstitutionsList>
+    <Flex direction="column">
+      <Search></Search>
+      <InstitutionsList
+        institutions={institutions}
+        isLoading={isLoading}
+      ></InstitutionsList>
+    </Flex>
   );
 };
 

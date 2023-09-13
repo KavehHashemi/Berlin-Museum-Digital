@@ -8,7 +8,7 @@ type props = {
 
 const InstitutionCard = ({ institution }: props) => {
   const navigate = useNavigate();
-  const handleClick = (id: number, name: string) => {
+  const handleClick = (id?: number, name?: string) => {
     // const url = pathGenerator({
     //   inst: { id: id, name: name },
     // });
@@ -17,13 +17,13 @@ const InstitutionCard = ({ institution }: props) => {
   return (
     <Card
       variant="institution"
-      id={institution.institution_id.toString()}
+      id={institution.institution_id?.toString()}
       key={institution.institution_id}
       onClick={() => {
         handleClick(institution.institution_id, institution.institution_name);
       }}
     >
-      {institution.institution_name} - {institution.institution_place}
+      {institution.institution_name}
     </Card>
   );
 };

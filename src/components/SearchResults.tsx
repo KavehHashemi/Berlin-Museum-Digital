@@ -6,32 +6,30 @@ import {
   PicType,
 } from "../Types";
 import { fetchEntity } from "../utils";
+import { SearchDispatchContext } from "../context";
 import { Card, SimpleGrid } from "@mantine/core";
-import { PathDispatchContext } from "../context";
 import { useNavigate } from "react-router-dom";
 
-const Object = () => {
-  const dispatch = useContext(PathDispatchContext);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [collection, setCollection] = useState<CompactObjectType[] | null>(
-    null
-  );
-  const [pics, setPics] = useState<PicType[]>([]);
+const SearchResults = () => {
   const navigate = useNavigate();
-  const id = window.location.pathname.split("/")[2];
-  const name = window.location.pathname.split("/")[3];
-
+  const dispatch = useContext(SearchDispatchContext);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [searchResults, setSearchResults] = useState<
+    CompactObjectType[] | null
+  >(null);
+  const [pics, setPics] = useState<PicType[]>([]);
+  const searchParam = window.location.pathname.split("/")[2];
   const params: FetchParamsType = {
     city: "berlin",
     type: EntityType.objects,
-    queryParam: `?s=collection:${id}&gbreitenat=100&navlang=de`,
+    queryParam: `?s=${searchParam}`,
   };
 
   useEffect(() => {
     (async () => {
       try {
         const res = await fetchEntity<CompactObjectType[]>(params);
-        setCollection(res);
+        setSearchResults(res);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -44,35 +42,19 @@ const Object = () => {
   }, []);
 
   useEffect(() => {
-    if (collection) {
-      if (dispatch) {
-        dispatch({
-          type: "setColl",
-          coll: {
-            id: +id,
-            name: decodeURI(name),
-          },
-        });
-      }
+    if (dispatch) dispatch({ type: "setSearchParam", payload: searchParam });
+    if (searchResults) {
       const temp: PicType[] = [];
-      for (const obj in collection) {
+      for (const res in searchResults) {
         temp.push({
-          id: collection[obj].objekt_id,
-          name: collection[obj].objekt_name,
-          url: collection[obj].image,
+          id: searchResults[res].objekt_id,
+          name: searchResults[res].objekt_name,
+          url: searchResults[res].image,
         });
       }
       setPics(temp);
     }
-  }, [collection]);
-
-  // const handleClick = (url: string) => {
-  //   const a = url.split("200w_");
-  //   const b = a[0] + a[1];
-  //   console.log(b);
-
-  //   window.open(`https://berlin.museum-digital.de/${b}`, "_blank")?.focus();
-  // };
+  }, [searchResults]);
 
   const handleClick = (id: number, name: string) => {
     navigate(`/objects/${id}/${name}`);
@@ -89,7 +71,7 @@ const Object = () => {
       p={"0.5rem"}
     >
       {isLoading ? (
-        <div>loading object</div>
+        <>Loading</>
       ) : (
         <>
           {pics.map((p, i) => {
@@ -101,7 +83,6 @@ const Object = () => {
                   alt={p.name}
                   width={200}
                   onClick={() => handleClick(p.id, p.name)}
-                  // onClick={() => handleClick(p.url)}
                 ></img>
               </Card>
             );
@@ -112,4 +93,4 @@ const Object = () => {
   );
 };
 
-export default Object;
+export default SearchResults;

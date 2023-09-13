@@ -225,6 +225,7 @@ export enum EntityType {
   collection = "collection",
   objects = "objects",
   object = "object",
+  search = "object-facet-search",
 }
 
 export type PathType = {
@@ -232,3 +233,5 @@ export type PathType = {
   coll?: { id: number; name: string };
   obj?: { id: number; name: string };
 };
+
+export type PicType = { id: number; name: string; url: string };
