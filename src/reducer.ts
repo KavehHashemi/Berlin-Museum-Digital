@@ -69,3 +69,14 @@ export const searchReducer = (
       return state;
   }
 };
+
+/////////////
+
+export const initialCity = "Berlin";
+export type CityActionType = {
+  type: "setCity";
+  payload: string;
+};
+export const cityReducer = (state: string, action: CityActionType) => {
+  return action.payload;
+};

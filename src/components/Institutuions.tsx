@@ -1,8 +1,9 @@
+/* eslint-disable no-debugger */
 import { useContext, useEffect, useState } from "react";
 import { CompactInstitutionType, EntityType, FetchParamsType } from "../Types";
 import { fetchEntity } from "../utils";
 import InstitutionsList from "./Views/InstitutionsList";
-import { PathDispatchContext } from "../context";
+import { CityContext, PathDispatchContext } from "../context";
 import { Flex } from "@mantine/core";
 import Search from "./Search";
 
@@ -12,9 +13,10 @@ const Institutuions = () => {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useContext(PathDispatchContext);
-
+  const currentCity = useContext(CityContext);
   const params: FetchParamsType = {
-    city: "berlin",
+    // city: CityNames[currentCity as keyof typeof CityNames],
+    city: currentCity,
     type: EntityType.institutions,
   };
 
@@ -28,7 +30,7 @@ const Institutuions = () => {
     return () => {
       setIsLoading(true);
     };
-  }, []);
+  }, [currentCity]);
 
   return (
     <Flex direction="column">

@@ -1,8 +1,11 @@
 import { ReactNode, createContext, useReducer } from "react";
 import {
+  CityActionType,
   PathActionType,
   SearchActionType,
   SearchStateType,
+  cityReducer,
+  initialCity,
   initialPath,
   initialSearchParam,
   pathReducer,
@@ -10,6 +13,7 @@ import {
 } from "./reducer";
 import { PathType } from "./Types";
 
+///////PATH CONTEXT
 export const PathContext = createContext<PathType>({
   inst: undefined,
   coll: undefined,
@@ -30,7 +34,7 @@ export const PathProvider = ({ children }: props) => {
     </PathContext.Provider>
   );
 };
-//////////
+///////SEARCH CONTEXT
 export const SearchContext = createContext<SearchStateType>(undefined);
 export const SearchDispatchContext =
   createContext<React.Dispatch<SearchActionType> | null>(null);
@@ -43,5 +47,19 @@ export const SearchProvider = ({ children }: props) => {
         {children}
       </SearchDispatchContext.Provider>
     </SearchContext.Provider>
+  );
+};
+///////CITY CONTEXT
+export const CityContext = createContext<string>("berlin");
+export const CityDispatchContext =
+  createContext<React.Dispatch<CityActionType> | null>(null);
+export const CityProvider = ({ children }: props) => {
+  const [city, dispatch] = useReducer(cityReducer, initialCity);
+  return (
+    <CityContext.Provider value={city}>
+      <CityDispatchContext.Provider value={dispatch}>
+        {children}
+      </CityDispatchContext.Provider>
+    </CityContext.Provider>
   );
 };

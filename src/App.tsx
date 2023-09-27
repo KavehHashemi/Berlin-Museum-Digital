@@ -9,7 +9,12 @@ import Navbar from "./components/Navbar";
 import { themeGenerator } from "./styles/theme";
 import { useContext, useEffect, useReducer, useState } from "react";
 import { initialPath, pathReducer } from "./reducer";
-import { PathContext, PathProvider, SearchProvider } from "./context";
+import {
+  CityProvider,
+  PathContext,
+  PathProvider,
+  SearchProvider,
+} from "./context";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import SearchResults from "./components/SearchResults";
 
@@ -25,8 +30,10 @@ const Layout = () => {
     >
       <PathProvider>
         <SearchProvider>
-          <Navbar lightMode={isLightMode} setMode={setLightMode}></Navbar>
-          <Outlet></Outlet>
+          <CityProvider>
+            <Navbar lightMode={isLightMode} setMode={setLightMode}></Navbar>
+            <Outlet></Outlet>
+          </CityProvider>
         </SearchProvider>
       </PathProvider>
     </MantineProvider>

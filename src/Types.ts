@@ -218,6 +218,14 @@ export type FetchParamsType = {
   queryParam?: string;
 };
 
+export type PathType = {
+  inst?: { id: number; name: string };
+  coll?: { id: number; name: string };
+  obj?: { id: number; name: string };
+};
+
+export type PicType = { id: number; name: string; url: string };
+
 export enum EntityType {
   institutions = "institutions",
   institution = "institution",
@@ -228,10 +236,25 @@ export enum EntityType {
   search = "object-facet-search",
 }
 
-export type PathType = {
-  inst?: { id: number; name: string };
-  coll?: { id: number; name: string };
-  obj?: { id: number; name: string };
-};
-
-export type PicType = { id: number; name: string; url: string };
+export enum CityNames {
+  "Deutschlandweit" = "nat",
+  "Agrargeschichte" = "agrargeschichte",
+  "Baden Württemberg" = "bawue",
+  "Bayern" = "bayern",
+  "Berlin" = "berlin",
+  "Brandenburg" = "brandenburg",
+  "Bremen" = "bremen",
+  "Hamburg" = "hamburg",
+  "Hessen" = "hessen",
+  "Mecklenburg-Vorpommern" = "meckpomm",
+  "Niedersachsen" = "nds",
+  "Ostwestfalen-Lippe" = "owl",
+  "Rheinland" = "rheinland",
+  "Rheinland-Pfalz" = "rlp",
+  "Sachsen" = "sachsen",
+  "Sachsen-Anhalt" = "st",
+  "Schleswig-Holstein" = "sh",
+  "Staatliche Museen zu Berlin" = "smb",
+  "Thüringen" = "thue",
+  "Westfalen" = "westfalen",
+}

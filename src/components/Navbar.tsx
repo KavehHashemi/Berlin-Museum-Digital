@@ -1,11 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Header, Text, Popover, Flex, Button, Center } from "@mantine/core";
-import { IconCircleLetterB, IconSun, IconMoon } from "@tabler/icons-react";
+import { Header, Text, Popover, Center, Button } from "@mantine/core";
+import { IconSun, IconMoon, IconChevronDown } from "@tabler/icons-react";
 
 import "../styles/navbar.css";
 import { useContext, useEffect } from "react";
-import { PathContext } from "../context";
 import BreadCrumbs from "./BreadCrumbs";
+import { CityNames } from "../Types";
+import CitiesList from "./CitiesList";
+import { CityContext } from "../context";
 
 type NavBarProps = {
   lightMode: boolean;
@@ -13,36 +14,50 @@ type NavBarProps = {
 };
 
 const Navbar = ({ setMode, lightMode }: NavBarProps) => {
+  const currentCity = useContext(CityContext);
+
   useEffect(() => {
     localStorage.setItem("isLightMode", lightMode ? "light" : "dark");
   }, [lightMode]);
 
+  const citiesArray = [];
+  for (const ct in CityNames) {
+    citiesArray.push(ct);
+  }
+
   return (
     <>
       <Header height={60}>
-        <Popover width={200} position="bottom" withArrow shadow="md">
+        <Popover
+          width={"auto"}
+          position="bottom-start"
+          withArrow
+          arrowPosition="center"
+          shadow="md"
+        >
           <Popover.Target>
-            <IconCircleLetterB></IconCircleLetterB>
+            <Button
+              rightIcon={<IconChevronDown size={14}></IconChevronDown>}
+              variant="city"
+            >
+              {currentCity}
+            </Button>
           </Popover.Target>
-          <Popover.Dropdown>other cities</Popover.Dropdown>
+          <Popover.Dropdown>
+            <CitiesList cities={citiesArray}></CitiesList>
+          </Popover.Dropdown>
         </Popover>
-        <Text size={"lg"} weight={"bolder"}>
+        <Text size={"lg"} weight={"bolder"} align="center">
           Museum Digital
         </Text>
-        <Center onClick={() => setMode(!lightMode)}>
+        <Center
+          style={{ justifyContent: "end" }}
+          onClick={() => setMode(!lightMode)}
+        >
           {lightMode ? <IconMoon></IconMoon> : <IconSun></IconSun>}
         </Center>
       </Header>
-      {/* <Flex
-        gap={"1rem"}
-        style={{ backgroundColor: "#000033", paddingBlock: "0.2rem" }}
-      > */}
-      <BreadCrumbs
-      // inst={path.inst}
-      // coll={path.coll}
-      // obj={path.obj}
-      ></BreadCrumbs>
-      {/* </Flex> */}
+      <BreadCrumbs></BreadCrumbs>
     </>
   );
 };

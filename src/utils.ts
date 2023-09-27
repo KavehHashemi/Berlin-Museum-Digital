@@ -1,4 +1,4 @@
-import { FetchParamsType } from "./Types";
+import { CityNames, FetchParamsType } from "./Types";
 
 export async function request<TResponse>(url: string): Promise<TResponse> {
   const response = await fetch(url);
@@ -7,7 +7,8 @@ export async function request<TResponse>(url: string): Promise<TResponse> {
 }
 
 export async function fetchEntity<TType>(p: FetchParamsType): Promise<TType> {
-  const origin = generateOriginURL(p.city);
+  const city = CityNames[p.city as keyof typeof CityNames];
+  const origin = generateOriginURL(city);
   const url = `${origin}/${p.type}${
     p.id ? "/" + p.id : p.queryParam ? p.queryParam : ""
   }`;
