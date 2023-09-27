@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useContext, useState } from "react";
 import {
+  CityNames,
   CollectionType,
   DetailedInstitutionType,
   EntityType,
@@ -9,22 +10,20 @@ import {
 import { useNavigate } from "react-router-dom";
 import { fetchEntity } from "../utils";
 import { Card, Flex, SimpleGrid } from "@mantine/core";
-import { PathDispatchContext } from "../context";
-// import { pathGenerator } from "../Paths";
-// import { initialPath, reducer } from "../reducer";
+import { CityContext, PathDispatchContext } from "../context";
 
 const Institution = () => {
   const navigate = useNavigate();
-  // const [path, dispatch] = useReducer(reducer, initialPath);
   const dispatch = useContext(PathDispatchContext);
   const [institution, setInstitution] =
     useState<DetailedInstitutionType | null>(null);
   const [collections, setCollections] = useState<CollectionType[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const id = window.location.pathname.split("/")[2];
-
+  const currentCity = useContext(CityContext);
+  const city = CityNames[currentCity as keyof typeof CityNames];
   const params: FetchParamsType = {
-    city: "berlin",
+    city: currentCity,
     type: EntityType.institution,
     id: id,
   };
@@ -39,7 +38,7 @@ const Institution = () => {
     return () => {
       setIsLoading(true);
     };
-  }, []);
+  }, [currentCity]);
 
   useEffect(() => {
     if (institution) {
@@ -88,13 +87,11 @@ const Institution = () => {
               >
                 {c.collection_image ? (
                   <img
-                    src={`https://berlin.museum-digital.de/data/berlin/${c.collection_image}`}
+                    src={`https://${city}.museum-digital.de/data/${city}/${c.collection_image}`}
                   ></img>
                 ) : (
                   <img
-                    src={
-                      "https://berlin.museum-digital.de/db_images_gestaltung/mdlogo-128px.png"
-                    }
+                    src={`https://${city}.museum-digital.de/db_images_gestaltung/mdlogo-128px.png`}
                   ></img>
                 )}
 

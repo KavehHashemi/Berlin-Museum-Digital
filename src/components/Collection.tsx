@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import {
+  CityNames,
   CompactObjectType,
   EntityType,
   FetchParamsType,
@@ -7,11 +8,13 @@ import {
 } from "../Types";
 import { fetchEntity } from "../utils";
 import { Card, SimpleGrid } from "@mantine/core";
-import { PathDispatchContext } from "../context";
+import { CityContext, PathDispatchContext } from "../context";
 import { useNavigate } from "react-router-dom";
 
 const Object = () => {
   const dispatch = useContext(PathDispatchContext);
+  const currentCity = useContext(CityContext);
+  const city = CityNames[currentCity as keyof typeof CityNames];
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [collection, setCollection] = useState<CompactObjectType[] | null>(
     null
@@ -22,7 +25,7 @@ const Object = () => {
   const name = window.location.pathname.split("/")[3];
 
   const params: FetchParamsType = {
-    city: "berlin",
+    city: currentCity,
     type: EntityType.objects,
     queryParam: `?s=collection:${id}&gbreitenat=100&navlang=de`,
   };
@@ -41,7 +44,7 @@ const Object = () => {
     return () => {
       setIsLoading(true);
     };
-  }, []);
+  }, [currentCity]);
 
   useEffect(() => {
     if (collection) {
@@ -97,7 +100,7 @@ const Object = () => {
               <Card variant="institution" key={i}>
                 <div>{p.name}</div>
                 <img
-                  src={`https://berlin.museum-digital.de/${p.url}`}
+                  src={`https://${city}.museum-digital.de/${p.url}`}
                   alt={p.name}
                   width={200}
                   onClick={() => handleClick(p.id, p.name)}

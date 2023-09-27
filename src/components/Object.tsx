@@ -1,7 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { DetailedObjectType, EntityType, FetchParamsType } from "../Types";
+import {
+  CityNames,
+  DetailedObjectType,
+  EntityType,
+  FetchParamsType,
+} from "../Types";
 import { fetchEntity } from "../utils";
-import { PathDispatchContext } from "../context";
+import { CityContext, PathDispatchContext } from "../context";
 import { Card, Flex } from "@mantine/core";
 
 const Object = () => {
@@ -9,12 +14,13 @@ const Object = () => {
   const [object, setObject] = useState<DetailedObjectType | null>(null);
   const [imgUrl, setImgUrl] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const currentCity = useContext(CityContext);
+  const city = CityNames[currentCity as keyof typeof CityNames];
   const id = window.location.pathname.split("/")[2];
   // const name = window.location.pathname.split("/")[3];
 
   const params: FetchParamsType = {
-    city: "berlin",
+    city: currentCity,
     type: EntityType.object,
     id: id,
   };
@@ -28,17 +34,18 @@ const Object = () => {
     return () => {
       setIsLoading(true);
     };
-  }, []);
+  }, [currentCity]);
 
   useEffect(() => {
     if (object) {
+      console.log(object);
       if (dispatch)
         dispatch({
           type: "setObj",
           obj: { id: object.object_id, name: object.object_name },
         });
       setImgUrl(
-        "https://berlin.museum-digital.de/data/berlin/" +
+        `https://${city}.museum-digital.de/data/${city}/` +
           object.object_images[0].folder +
           "/" +
           object?.object_images[0].preview
@@ -49,7 +56,7 @@ const Object = () => {
   const handleClick = () => {
     if (object) {
       const url =
-        "https://berlin.museum-digital.de/data/berlin/" +
+        `https://${city}.museum-digital.de/data/${city}/` +
         object.object_images[0].folder +
         "/" +
         object?.object_images[0].filename_loc;

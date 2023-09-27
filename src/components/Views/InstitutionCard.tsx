@@ -1,6 +1,8 @@
 import { Badge, Card, Group, Text } from "@mantine/core";
-import { CompactInstitutionType } from "../../Types";
+import { CityNames, CompactInstitutionType } from "../../Types";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { CityContext } from "../../context";
 
 type props = {
   institution: CompactInstitutionType;
@@ -8,6 +10,9 @@ type props = {
 
 const InstitutionCard = ({ institution }: props) => {
   const navigate = useNavigate();
+  const currentCity = useContext(CityContext);
+  const city = CityNames[currentCity as keyof typeof CityNames];
+
   const handleClick = (id?: number, name?: string) => {
     navigate(`institutions/${id}/${name}`);
   };
@@ -23,15 +28,13 @@ const InstitutionCard = ({ institution }: props) => {
       <div style={{ display: "flex", justifyContent: "center" }}>
         {institution.institution_image ? (
           <img
-            src={`https://berlin.museum-digital.de/data/berlin/${institution.institution_image}`}
+            src={`https://${city}.museum-digital.de/data/${city}/${institution.institution_image}`}
             height={128}
             alt={institution.institution_name}
           ></img>
         ) : (
           <img
-            src={
-              "https://berlin.museum-digital.de/db_images_gestaltung/mdlogo-128px.png"
-            }
+            src={`https://${city}.museum-digital.de/db_images_gestaltung/mdlogo-128px.png`}
           ></img>
         )}
       </div>

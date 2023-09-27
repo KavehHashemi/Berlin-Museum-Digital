@@ -10,8 +10,6 @@ type props = {
 const InstitutionsList = ({ institutions, isLoading }: props) => {
   return (
     <SimpleGrid
-      // spacing="md"
-      // p="md"
       breakpoints={[
         { minWidth: "sm", cols: 2 },
         { minWidth: "md", cols: 3 },

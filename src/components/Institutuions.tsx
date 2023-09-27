@@ -15,7 +15,6 @@ const Institutuions = () => {
   const dispatch = useContext(PathDispatchContext);
   const currentCity = useContext(CityContext);
   const params: FetchParamsType = {
-    // city: CityNames[currentCity as keyof typeof CityNames],
     city: currentCity,
     type: EntityType.institutions,
   };
