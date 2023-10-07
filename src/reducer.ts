@@ -72,11 +72,12 @@ export const searchReducer = (
 
 /////////////
 
-export const initialCity = "Berlin";
+export const initialCity = localStorage.getItem("currentCity") || "Berlin";
 export type CityActionType = {
   type: "setCity";
   payload: string;
 };
 export const cityReducer = (state: string, action: CityActionType) => {
+  localStorage.setItem("currentCity", action.payload);
   return action.payload;
 };

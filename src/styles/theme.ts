@@ -39,6 +39,13 @@ export const themeGenerator = (isLightMode: boolean) => {
             gap: "1.5rem",
           },
         },
+        variants: {
+          between: () => ({
+            root: {
+              gridTemplateColumns: "1fr 20%",
+            },
+          }),
+        },
       },
       Header: {
         styles: {
@@ -77,8 +84,36 @@ export const themeGenerator = (isLightMode: boolean) => {
               },
             },
           }),
+          collection: (theme) => ({
+            root: {
+              padding: "1.25rem",
+              backgroundColor: isLightMode
+                ? theme.colors.gray[2]
+                : theme.colors.dark[8],
+              ...theme.fn.hover({
+                backgroundColor: isLightMode
+                  ? theme.colors.gray[1]
+                  : theme.colors.dark[6],
+                cursor: "pointer",
+              }),
+              ":active": {
+                backgroundColor: theme.colors.gray[2],
+              },
+            },
+          }),
         },
       },
+      Group: {
+        variants: {
+          between: () => ({
+            root: {
+              justifyContent: "space-between",
+              marginBottom: "1rem",
+            },
+          }),
+        },
+      },
+
       Button: {
         variants: {
           city: (theme) => ({

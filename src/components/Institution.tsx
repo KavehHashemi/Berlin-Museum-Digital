@@ -9,7 +9,7 @@ import {
 } from "../Types";
 import { useNavigate } from "react-router-dom";
 import { fetchEntity } from "../utils";
-import { Card, Flex, SimpleGrid } from "@mantine/core";
+import { Badge, Card, Flex, Group, SimpleGrid, Text } from "@mantine/core";
 import { CityContext, PathDispatchContext } from "../context";
 
 const Institution = () => {
@@ -67,38 +67,50 @@ const Institution = () => {
       {isLoading ? (
         <>loading institution</>
       ) : (
-        <Flex direction={"column"}>
+        <Flex direction={"column"} style={{ width: "100%" }}>
           <Flex justify={"center"} py={"1rem"}>
             {institution?.institution_name}
           </Flex>
           <SimpleGrid
             spacing="md"
             breakpoints={[
-              { minWidth: "sm", cols: 2 },
-              { minWidth: "md", cols: 3 },
-              { minWidth: "lg", cols: 5 },
+              { minWidth: "sm", cols: 1 },
+              { minWidth: "md", cols: 2 },
             ]}
           >
             {collections?.sort().map((c) => (
               <Card
-                variant="institution"
-                onClick={() => handleClick(c.collection_id, c.collection_name)}
+                variant="collection"
+                onClick={() => {
+                  c.collection_number_of_objects !== 0 &&
+                    handleClick(c.collection_id, c.collection_name);
+                }}
                 key={c.collection_id}
               >
-                {c.collection_image ? (
-                  <img
-                    src={`https://${city}.museum-digital.de/data/${city}/${c.collection_image}`}
-                  ></img>
-                ) : (
-                  <img
-                    src={`https://${city}.museum-digital.de/db_images_gestaltung/mdlogo-128px.png`}
-                  ></img>
-                )}
+                <SimpleGrid variant="between">
+                  <div>{c.collection_name}</div>
+                  <Badge
+                    color={
+                      c.collection_number_of_objects !== 0 ? "cyan" : "red"
+                    }
+                  >
+                    {c.collection_number_of_objects} objects
+                  </Badge>
+                </SimpleGrid>
+                <Flex gap="1rem">
+                  {c.collection_image ? (
+                    <img
+                      src={`https://${city}.museum-digital.de/data/${city}/${c.collection_image}`}
+                      style={{ maxHeight: 300 }}
+                    ></img>
+                  ) : (
+                    <img
+                      src={`https://${city}.museum-digital.de/db_images_gestaltung/mdlogo-128px.png`}
+                    ></img>
+                  )}
 
-                <div>
-                  {c.collection_name} - {c.collection_number_of_objects}
-                </div>
-                <div>{c.collection_description}</div>
+                  <div>{c.collection_description}</div>
+                </Flex>
               </Card>
             ))}
           </SimpleGrid>

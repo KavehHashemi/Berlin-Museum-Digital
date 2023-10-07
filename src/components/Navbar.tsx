@@ -1,8 +1,7 @@
 import { Header, Text, Popover, Center, Button } from "@mantine/core";
 import { IconSun, IconMoon, IconChevronDown } from "@tabler/icons-react";
 
-import "../styles/navbar.css";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import BreadCrumbs from "./BreadCrumbs";
 import { CityNames } from "../Types";
 import CitiesList from "./CitiesList";
@@ -15,6 +14,7 @@ type NavBarProps = {
 
 const Navbar = ({ setMode, lightMode }: NavBarProps) => {
   const currentCity = useContext(CityContext);
+  const [opened, setOpened] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("isLightMode", lightMode ? "light" : "dark");
@@ -29,6 +29,8 @@ const Navbar = ({ setMode, lightMode }: NavBarProps) => {
     <>
       <Header height={60}>
         <Popover
+          opened={opened}
+          onChange={setOpened}
           width={"auto"}
           position="bottom-start"
           withArrow
@@ -37,6 +39,7 @@ const Navbar = ({ setMode, lightMode }: NavBarProps) => {
         >
           <Popover.Target>
             <Button
+              onClick={() => setOpened(!opened)}
               rightIcon={<IconChevronDown size={14}></IconChevronDown>}
               variant="city"
             >
@@ -44,7 +47,7 @@ const Navbar = ({ setMode, lightMode }: NavBarProps) => {
             </Button>
           </Popover.Target>
           <Popover.Dropdown>
-            <CitiesList cities={citiesArray}></CitiesList>
+            <CitiesList cities={citiesArray} setOpened={setOpened}></CitiesList>
           </Popover.Dropdown>
         </Popover>
         <Text size={"lg"} weight={"bolder"} align="center">

@@ -2,6 +2,7 @@ import { Button, Flex } from "@mantine/core";
 import { IconChevronRight, IconSearch, IconX } from "@tabler/icons-react";
 import { useContext } from "react";
 import {
+  CityContext,
   PathContext,
   PathDispatchContext,
   SearchContext,
@@ -15,6 +16,7 @@ const BreadCrumbs = () => {
   const dispatchPath = useContext(PathDispatchContext);
   const dispatchSearchParam = useContext(SearchDispatchContext);
   const { coll, inst, obj } = useContext(PathContext);
+  const currentCity = useContext(CityContext);
 
   const searchParam = useContext(SearchContext);
 
@@ -49,7 +51,7 @@ const BreadCrumbs = () => {
       <Flex style={{ padding: "0.2rem 1rem", alignItems: "center" }}>
         {inst && (
           <Button variant="subtle" onClick={() => handleCLick("home")}>
-            Home
+            {currentCity}
           </Button>
         )}
         {inst && (

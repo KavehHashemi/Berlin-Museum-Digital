@@ -7,6 +7,7 @@ import Object from "./components/Object";
 import { MantineProvider } from "@mantine/core";
 import Navbar from "./components/Navbar";
 import { themeGenerator } from "./styles/theme";
+import "./styles/app.css";
 import { useContext, useEffect, useReducer, useState } from "react";
 import { initialPath, pathReducer } from "./reducer";
 import {
