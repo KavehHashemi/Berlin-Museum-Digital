@@ -100,7 +100,8 @@ const Institution = () => {
                 <Flex gap="1rem">
                   {c.collection_image ? (
                     <img
-                      src={`https://${city}.museum-digital.de/data/${city}/${c.collection_image}`}
+                      // src={`https://${city}.museum-digital.de/data/${city}/${c.collection_image}`}
+                      src={`https://asset.museum-digital.org/${city}/${c.collection_image}`}
                       style={{ maxHeight: 300 }}
                     ></img>
                   ) : (

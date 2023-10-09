@@ -1,5 +1,6 @@
 import { List } from "@mantine/core";
 import {
+  CityContext,
   CityDispatchContext,
   PathDispatchContext,
   SearchDispatchContext,
@@ -17,6 +18,7 @@ const CitiesList = ({ cities, setOpened }: props) => {
   const dispatchSearchParam = useContext(SearchDispatchContext);
   const navigate = useNavigate();
   const dispatch = useContext(CityDispatchContext);
+  const currentCity = useContext(CityContext);
 
   const handleClick = (city: string) => {
     setOpened(false);
@@ -29,7 +31,13 @@ const CitiesList = ({ cities, setOpened }: props) => {
     <List listStyleType="none">
       {cities.map((ct, i) => {
         return (
-          <List.Item key={i} onClick={() => handleClick(ct)}>
+          <List.Item
+            key={i}
+            onClick={() => handleClick(ct)}
+            style={{
+              backgroundColor: currentCity === ct ? "#6f6f6f20" : "none",
+            }}
+          >
             {ct}
           </List.Item>
         );

@@ -44,8 +44,14 @@ const Object = () => {
           type: "setObj",
           obj: { id: object.object_id, name: object.object_name },
         });
+      // setImgUrl(
+      //   `https://${city}.museum-digital.de/data/${city}/` +
+      //     object.object_images[0].folder +
+      //     "/" +
+      //     object?.object_images[0].preview
+      // );
       setImgUrl(
-        `https://${city}.museum-digital.de/data/${city}/` +
+        `https://asset.museum-digital.org/${city}/` +
           object.object_images[0].folder +
           "/" +
           object?.object_images[0].preview

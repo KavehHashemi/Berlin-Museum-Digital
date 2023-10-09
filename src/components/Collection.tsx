@@ -65,6 +65,7 @@ const Object = () => {
           url: collection[obj].image,
         });
       }
+
       setPics(temp);
     }
   }, [collection]);

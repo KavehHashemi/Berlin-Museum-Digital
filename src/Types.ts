@@ -237,7 +237,7 @@ export enum EntityType {
 }
 
 export enum CityNames {
-  "Deutschlandweit" = "nat",
+  // "Deutschlandweit" = "nat",
   "Agrargeschichte" = "agrargeschichte",
   "Baden Württemberg" = "bawue",
   "Bayern" = "bayern",

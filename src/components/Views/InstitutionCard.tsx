@@ -1,7 +1,7 @@
 import { Badge, Card, Group, Text } from "@mantine/core";
 import { CityNames, CompactInstitutionType } from "../../Types";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { CityContext } from "../../context";
 
 type props = {
@@ -10,12 +10,25 @@ type props = {
 
 const InstitutionCard = ({ institution }: props) => {
   const navigate = useNavigate();
+  const [imgUrl, setImgUrl] = useState("");
   const currentCity = useContext(CityContext);
   const city = CityNames[currentCity as keyof typeof CityNames];
+
+  useEffect(() => {
+    try {
+      let a = `https://asset.museum-digital.org/${city}/${institution.institution_image}`;
+      if (city === CityNames.Hamburg)
+        a = `https://asset.museum-digital.org/de-${city}/${institution.institution_image}`;
+      if (a) setImgUrl(a);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [institution]);
 
   const handleClick = (id?: number, name?: string) => {
     navigate(`institutions/${id}/${name}`);
   };
+
   return (
     <Card
       variant="institution"
@@ -28,8 +41,10 @@ const InstitutionCard = ({ institution }: props) => {
       <div style={{ display: "flex", justifyContent: "center" }}>
         {institution.institution_image ? (
           <img
-            src={`https://${city}.museum-digital.de/data/${city}/${institution.institution_image}`}
+            // src={`https://${city}.museum-digital.de/data/${city}/${institution.institution_image}`}
+            src={imgUrl}
             height={128}
+            loading="lazy"
             alt={institution.institution_name}
           ></img>
         ) : (
