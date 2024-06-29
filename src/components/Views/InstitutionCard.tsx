@@ -16,9 +16,7 @@ const InstitutionCard = ({ institution }: props) => {
 
   useEffect(() => {
     try {
-      let a = `https://asset.museum-digital.org/${city}/${institution.institution_image}`;
-      if (city === CityNames.Hamburg)
-        a = `https://asset.museum-digital.org/de-${city}/${institution.institution_image}`;
+      const a = `https://${city}.museum-digital.de/${institution.institution_image}`;
       if (a) setImgUrl(a);
     } catch (error) {
       console.log(error);
@@ -41,7 +39,7 @@ const InstitutionCard = ({ institution }: props) => {
       <div style={{ display: "flex", justifyContent: "center" }}>
         {institution.institution_image ? (
           <img
-            // src={`https://${city}.museum-digital.de/data/${city}/${institution.institution_image}`}
+            //src={`https://${city}.museum-digital.de/data/${city}/${institution.institution_image}`}
             src={imgUrl}
             height={128}
             loading="lazy"
