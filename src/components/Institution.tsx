@@ -52,6 +52,7 @@ const Institution = () => {
         });
       const temp: CollectionType[] = [];
       for (const c in institution.collections) {
+        console.log(institution.collections[c]);
         temp.push(institution.collections[c]);
       }
       setCollections(temp);
@@ -61,6 +62,9 @@ const Institution = () => {
   const handleClick = (id: number, name: string) => {
     navigate(`/collections/${id}/${name}`);
   };
+
+  let a = city.toString();
+  if (city == CityNames.Hamburg) a = "de-hamburg";
 
   return (
     <Flex p={"0.5rem"}>
@@ -100,8 +104,7 @@ const Institution = () => {
                 <Flex gap="1rem">
                   {c.collection_image ? (
                     <img
-                      // src={`https://${city}.museum-digital.de/data/${city}/${c.collection_image}`}
-                      src={`https://asset.museum-digital.org/${city}/${c.collection_image}`}
+                      src={`https://${city}.museum-digital.de/data/${a}/${c.collection_image}`}
                       style={{ maxHeight: 300 }}
                     ></img>
                   ) : (
