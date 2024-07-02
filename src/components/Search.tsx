@@ -29,7 +29,7 @@ const Search = () => {
             <IconArrowRight size="1.1rem" stroke={1.5} />
           </ActionIcon>
         }
-        placeholder="Objeckte Suchen"
+        placeholder="Objekte Suchen"
         rightSectionWidth={42}
         ref={ref}
       />

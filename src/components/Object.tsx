@@ -44,18 +44,18 @@ const Object = () => {
           type: "setObj",
           obj: { id: object.object_id, name: object.object_name },
         });
-      // setImgUrl(
-      //   `https://${city}.museum-digital.de/data/${city}/` +
-      //     object.object_images[0].folder +
-      //     "/" +
-      //     object?.object_images[0].preview
-      // );
       setImgUrl(
-        `https://asset.museum-digital.org/${city}/` +
+        `https://${city}.museum-digital.de/data/${city}/` +
           object.object_images[0].folder +
           "/" +
           object?.object_images[0].preview
       );
+      // setImgUrl(
+      //   `https://asset.museum-digital.org/${city}/` +
+      //     object.object_images[0].folder +
+      //     "/" +
+      //     object?.object_images[0].preview
+      // );
     }
   }, [object]);
 
@@ -75,10 +75,13 @@ const Object = () => {
       {isLoading ? (
         <div>loading</div>
       ) : (
-        <Card variant="institution" onClick={handleClick}>
-          <img src={imgUrl} alt={object?.object_name} width={200}></img>
+        <Card variant="detailed" onClick={handleClick}>
           <div>{object?.object_name}</div>
+          <img src={imgUrl} alt={object?.object_name} width={200}></img>
           <div>{object?.object_description}</div>
+          <div>{object?.object_type}</div>
+          <div>{object?.object_dimensions}</div>
+          <div>{object?.object_material_technique}</div>
         </Card>
       )}
     </Flex>

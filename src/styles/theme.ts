@@ -1,4 +1,4 @@
-import { MantineThemeOverride } from "@mantine/core";
+import { Flex, MantineThemeOverride } from "@mantine/core";
 
 export const themeGenerator = (isLightMode: boolean) => {
   const myTheme: MantineThemeOverride = {
@@ -86,7 +86,7 @@ export const themeGenerator = (isLightMode: boolean) => {
           }),
           collection: (theme) => ({
             root: {
-              padding: "1.25rem",
+              padding: "0 1rem 1rem !important",
               backgroundColor: isLightMode
                 ? theme.colors.gray[2]
                 : theme.colors.dark[8],
@@ -101,6 +101,48 @@ export const themeGenerator = (isLightMode: boolean) => {
               },
             },
           }),
+          object: (theme) => ({
+            root: {
+              padding: "1.25rem !important",
+              display: "Flex",
+              flexDirection: "column",
+              justifyContent: "start",
+              alignItems: "center",
+              gap: "1rem",
+              backgroundColor: isLightMode
+                ? theme.colors.gray[2]
+                : theme.colors.dark[8],
+              ...theme.fn.hover({
+                backgroundColor: isLightMode
+                  ? theme.colors.gray[1]
+                  : theme.colors.dark[6],
+                cursor: "pointer",
+              }),
+              ":active": {
+                backgroundColor: theme.colors.gray[2],
+              },
+            }
+          }),
+          detailed: (theme) => ({
+            root: {
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.5rem",
+              alignItems: "center",
+              backgroundColor: isLightMode
+                ? theme.colors.gray[2]
+                : theme.colors.dark[8],
+              ...theme.fn.hover({
+                backgroundColor: isLightMode
+                  ? theme.colors.gray[1]
+                  : theme.colors.dark[6],
+                cursor: "pointer",
+              }),
+              ":active": {
+                backgroundColor: theme.colors.gray[2],
+              },
+            }
+          })
         },
       },
       Group: {

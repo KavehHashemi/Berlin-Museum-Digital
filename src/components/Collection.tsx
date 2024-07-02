@@ -98,7 +98,8 @@ const Object = () => {
         <>
           {pics.map((p, i) => {
             return (
-              <Card variant="institution" key={i}>
+              // <Card variant="collection" key={i}>
+              <Card variant="object" key={i}>
                 <div>{p.name}</div>
                 <img
                   src={`https://${city}.museum-digital.de/${p.url}`}
