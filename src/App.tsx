@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Routes, Route, Outlet } from "react-router-dom";
-import Institutuions from "./components/Institutuions";
-import Institution from "./components/Institution";
-import Collection from "./components/Collection";
-import Object from "./components/Object";
+import City from "./Views/City";
+import Institution from "./Views/Institution";
+import Collection from "./Views/Collection";
+import Object from "./Views/Object";
 import { MantineProvider } from "@mantine/core";
 import Navbar from "./components/Navbar";
 import { themeGenerator } from "./styles/theme";
@@ -17,7 +17,7 @@ import {
   SearchProvider,
 } from "./context";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import SearchResults from "./components/SearchResults";
+import SearchResults from "./Views/SearchResults";
 
 const Layout = () => {
   const [isLightMode, setLightMode] = useState<boolean>(
@@ -68,7 +68,7 @@ const router = createBrowserRouter([
     path: "/",
     Component: Layout,
     children: [
-      { path: "/", Component: Institutuions },
+      { path: "/", Component: City },
       { path: `/institutions/*`, Component: Institution },
       { path: `/collections/*`, Component: Collection },
       { path: `/objects/*`, Component: Object },

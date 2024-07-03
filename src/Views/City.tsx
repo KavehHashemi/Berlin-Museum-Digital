@@ -2,12 +2,12 @@
 import { useContext, useEffect, useState } from "react";
 import { CompactInstitutionType, EntityType, FetchParamsType } from "../Types";
 import { fetchEntity } from "../utils";
-import InstitutionsList from "./Views/InstitutionsList";
+import InstitutionsList from "../components/Institution/InstitutionsList";
 import { CityContext, PathDispatchContext } from "../context";
 import { Flex } from "@mantine/core";
-import Search from "./Search";
+import Search from "../components/Search";
 
-const Institutuions = () => {
+const City = () => {
   const [institutions, setInstitutions] = useState<CompactInstitutionType[]>(
     []
   );
@@ -42,4 +42,4 @@ const Institutuions = () => {
   );
 };
 
-export default Institutuions;
+export default City;
